@@ -3,12 +3,6 @@ $(document).ready(function () {
 
 });
 function plotWorldmapWithMarkers(id) {
-    console.log('id',id);
-    var mMap = displayView(id);
-    onMapMarker(mMap);
-    createButton(mMap);
-    
-    function displayView(id) {
 // initiallizing the map by setting  geographical coordinates and a zoom level
         var mymap = L.map(id, {
             center: [52.03222, 16.52344],
@@ -24,29 +18,30 @@ function plotWorldmapWithMarkers(id) {
             id: 'mapbox.streets',
             accessToken: "pk.eyJ1IjoiZ3NhbmdyYW0iLCJhIjoiY2o0cXh1Ymc5MmJldjMybnU3ZmE2N291eCJ9.OD8iQgZWre9BHy2f5Tl_nw"
         }).addTo(mymap)
-        return mymap;
-    }
-
+    onMapMarker(mymap);
+    createButton('resize'+id);
 
 // adding a marker to the map
-    function onMapMarker(mMap)
+    function onMapMarker(mymap)
     {
-        L.marker([52.03222, 16.52344]).addTo(mMap).bindPopup('coordinates ' + 52.0322 + ',' + 16.52344);
+        L.marker([52.03222, 16.52344]).addTo(mymap).bindPopup('coordinates ' + 52.0322 + ',' + 16.52344);
     }
-    
-    function createButton(mMap)
+     
+    // creating resize button dynamically with an dynamic button id
+    function createButton(bot)
     {
         var butu='<div class="leaflet-control-container" >'+
                 '<div class="leaflet-top leaflet-right">'+
                     '<div class="leaflet-control-zoom leaflet-bar leaflet-control">'+
-                        '<button type="button" id="bot">Resizer</button>'+
+                        '<button type="button" id='+bot+'>Resizer</button>'+
                     '</div>'+
                 '</div>'+
             '</div>' ;
     $('#'+id).append(butu);
-    }
-    $('#bot').click(function () {
-        mMap.setView([52.03222, 16.52344], 2);
+    $('#'+bot).click(function () {
+        mymap.setView([52.03222, 16.52344], 2);
     });
+    }
+    
 
 }
